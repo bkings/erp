@@ -1,0 +1,1 @@
+dbuser:postgres,dbpassword:Manager@123,dbname:jdbc:postgresql://localhost:5432/postgres,jdbcdriver:org.postgresql.Driver
