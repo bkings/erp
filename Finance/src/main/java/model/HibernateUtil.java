@@ -1,5 +1,6 @@
 package model;
 
+import com.model.account.BalanceSheet;
 import com.model.setup.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,8 +17,6 @@ public static void init() {
         Properties prop = new Properties();
         prop.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
         prop.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/erp_finance?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false");
-//        prop.setProperty("hibernate.default_schema", "finance");
-        prop.setProperty("hibernate.default_schema", "public");
         prop.setProperty("hibernate.connection.username", "postgres");
 //        prop.setProperty("hibernate.connection.password", "Manager@123");
         prop.setProperty("hibernate.connection.password", "root");
@@ -25,11 +24,13 @@ public static void init() {
         prop.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
         prop.setProperty("hibernate.hbm2ddl.auto", "update");
         prop.setProperty("hibernate.show_sql", "true");
+        prop.setProperty("hibernate.default_schema", "public");
         sessionFactory = new Configuration()
                   .addProperties(prop)
                   //your model class
                   .addAnnotatedClass(AccountCategory.class)
                   .addAnnotatedClass(AccountSubCategory.class)
+                  .addAnnotatedClass(BalanceSheet.class)
                   .buildSessionFactory();
     } catch (Throwable ex) {
         throw new ExceptionInInitializerError(ex);

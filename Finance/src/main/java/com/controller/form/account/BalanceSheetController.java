@@ -1,4 +1,4 @@
-package com.controller.form.setup;
+package com.controller.form.account;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @ComponentScan
-public class AccountSubCategoryController {
+public class BalanceSheetController {
 
-	@RequestMapping(value = "Setup/AccountSubCategory", method = RequestMethod.GET)
-	public String doGet() {
-		return "Setup/AccountSubCategory";
-	}
+    @RequestMapping(value = "Account/BalanceSheet", method = RequestMethod.GET)
+    public String doGet() {
+        return "Account/BalanceSheet";
+    }
+
+	
 }

@@ -18,7 +18,7 @@
 				<label id='ActionMSG'>&nbsp;</label><br> <input type='button'
 					onclick='doSave()' id='Save' value='Save' class='btn btn-success' />
 				<input type='button' onclick='doUpdate()' id='Update' value='Update'
-					class='btn btn-success' style='display: none' />
+					class='btn btn-success' style='display: none'/>
 			</div>
 		</div>
 	</form>
@@ -59,13 +59,13 @@ $('.btn').button('reset');
  function doSave()
 {
  var dataForm = $('form').serializeArray(); var requestData = {}; $.each(dataForm, function(i, v) {requestData[v.name] = v.value;});
-var URL="<%=path%>/api/Setup/AccountCategory";
+var URL="<%=path%>/api/Account/BalanceSheet";
 callApi(URL,requestData,"POST");
 }
  function doUpdate()
 {
   var dataForm = $('form').serializeArray(); var requestData = {}; $.each(dataForm, function(i, v) {requestData[v.name] = v.value;});
- var URL="<%=path%>/api/Setup/AccountCategory/"+document.getElementById('id').value;
+ var URL="<%=path%>/api/Account/BalanceSheet/"+document.getElementById('id').value;
 callApi(URL,requestData,"PUT");
 }
 function getRecord()
@@ -86,7 +86,7 @@ $('#dataTable').append(tableData);
 }
 function recordDelete(id){
 if(!confirm('Are you sure'))return;
-var URL="<%=path%>/api/Setup/AccountCategory/"+id;
+var URL="<%=path%>/api/Account/BalanceSheet/"+id;
 callApi(URL,"","DELETE");
 }
  getRecord();

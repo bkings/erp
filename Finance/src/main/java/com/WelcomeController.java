@@ -20,27 +20,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ComponentScan
 public class WelcomeController {
 
-    
-    @RequestMapping(value = "api/welcome", method = RequestMethod.GET)
-    @ResponseBody
-    public Object loginCheck(@RequestHeader(value = "Authorization") String Authorization){
-            JWTToken td = new JWTToken(Authorization);
-            model.Message message = new model.Message();
-        if (!td.isStatus()) {
-            return message.respondWithError("invalid token");
-        }
-        Map map = new HashMap();//   
-      String branch=td.getBranch();
-      String sql="SELECT concat(id,'') id,code,name,parent FROM public.branch_master WHERE concat(id,'') LIKE '"+branch+"%' ORDER BY id";
-      map.put("branchList", new DB().getRecord(sql));
-      return map;
-    }
-    
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize("1024MB");
-        factory.setMaxRequestSize("1024MB");
-        return factory.createMultipartConfig();
-    }
+	@RequestMapping(value = "api/welcome", method = RequestMethod.GET)
+	@ResponseBody
+	public Object loginCheck(@RequestHeader(value = "Authorization") String Authorization) {
+		
+		System.out.println("Inside api welcome");
+		
+		JWTToken td = new JWTToken(Authorization);
+		model.Message message = new model.Message();
+		if (!td.isStatus()) {
+			return message.respondWithError("invalid token");
+		}
+		Map map = new HashMap();//
+		String branch = td.getBranch();
+		String sql = "SELECT concat(id,'') id,code,name,parent FROM public.branch_master WHERE concat(id,'') LIKE '"
+				+ branch + "%' ORDER BY id";
+		map.put("branchList", new DB().getRecord(sql));
+		return map;
+	}
+
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setMaxFileSize("1024MB");
+		factory.setMaxRequestSize("1024MB");
+		return factory.createMultipartConfig();
+	}
 }

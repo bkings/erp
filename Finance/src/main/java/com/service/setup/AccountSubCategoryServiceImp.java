@@ -6,12 +6,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.config.JWTToken;
 import com.dao.setup.DaoAccountSubCategory;
 import com.model.setup.AccountCategory;
 import com.model.setup.AccountSubCategory;
+
+import model.HibernateUtil;
 
 @Service
 public class AccountSubCategoryServiceImp implements AccountSubCategoryService {
@@ -24,7 +28,7 @@ public class AccountSubCategoryServiceImp implements AccountSubCategoryService {
 
 	@Override
 	public Object getAll() {
-		return da.getAll("from AccountSubCategory order by accountCategory,acName,acCode");
+		return da.getAll("from AccountSubCategory order by accountCategory,acCode");
 	}
 
 	@Override
@@ -40,46 +44,72 @@ public class AccountSubCategoryServiceImp implements AccountSubCategoryService {
 			Map map = new org.codehaus.jackson.map.ObjectMapper().readValue(jsonData,
 					new org.codehaus.jackson.type.TypeReference<Map<String, String>>() {
 					});
+			
 			String parent = map.get("mgrCode").toString();
-			long acCode = (long) map.get("acCode");
+			System.out.println("Inside save method:: \n " + parent);
+			/*long acCode = (long) map.get("ac_code");
+			System.out.println("Inside save method:: \n " + acCode); */
 			String acName = map.get("acName").toString();
+			System.out.println("Inside save method:: \n " + acName);
 			String accountCategory = map.get("accountCategory").toString();
+			System.out.println("after acc category == " + accountCategory );
 			String sql, id;
 			long tableId;
-			obj.setAcCode(acCode);
+//			obj.setAcCode(acCode);
 			obj.setAcName(acName);
 			obj.setAccountCategory(new AccountCategory(accountCategory));
+			System.out.println("parent length " + parent.length());
 			if (parent.length() == 0) {
 				if (accountCategory.length() == 1) {
 					obj.setAcCode(Long.parseLong(accountCategory + "01"));
 				} else {
 					obj.setAcCode(Long.parseLong(accountCategory + "1"));
 				}
+				System.out.println("before save");
 				row = da.save(obj);
+				System.out.println("after save");
 				if (row == 1) {
 					return message.respondWithMessage("Success");
 				}
 				return message.respondWithError(da.getMsg());
 			}
 
+			System.out.println("out of if condn");
+			
 			sql = "SELECT coalesce(MAX(acCode),0) as nextid FROM account_sub_category WHERE mgrCode=" + parent;
 			List list = da.getRecord(sql);
 			map = (Map) list.get(0);
 			id = map.get("nextid").toString();
+			
+			System.out.println("running where id = " + id);
 
 			if (id.equalsIgnoreCase("0")) {
 				id = parent + "00";
 			}
+			
+			System.out.println("parent length = " + parent.length() + "and id length = " + id.length());
+			
 			id = id.substring(parent.length(), id.length());
+			
+			System.out.println("id from substring " + id);
+			
 			tableId = Long.parseLong(id);
+			
+			System.out.println("table id before " + tableId);
+			
 			tableId = tableId + 1;
-
+			
+			System.out.println("table id after " + tableId);
+			
 			if (tableId < 10) {
 				id = parent + "0" + tableId;
 			} else {
 				id = parent + "" + tableId;
 			}
+			
+			System.out.println("ID later is " + id);
 
+			obj.setAcCode(Long.parseLong(id));
 			obj.setMgrCode(Long.parseLong(parent));
 			row = da.save(obj);
 			if (row == 1) {
@@ -134,14 +164,30 @@ public class AccountSubCategoryServiceImp implements AccountSubCategoryService {
 		}
 
 		id = "'" + id.replace(",", "','") + "'";
-		sql = "DELETE FROM account_sub_category WHERE acCode IN (" + id + ")";
-		row = da.delete(sql);
-		msg = da.getMsg();
-		if (row > 0) {
-			return message.respondWithMessage("Success");
-		} else if (msg.contains("foreign key")) {
-			msg = "this record already used in reference tables, Cannot delete of this record";
+		
+		
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tr = session.beginTransaction();
+		String sqlQuery = "SELECT * FROM account_sub_category WHERE acCode= '"+id+"' ";
+		
+		AccountSubCategory obj = (AccountSubCategory) session.createSQLQuery(sqlQuery).list();
+		System.out.println("mgr code is ::: \n" + obj.getMgrCode());
+		
+		if(obj.getMgrCode() != null){
+			row = da.delete(sql);
+			msg = da.getMsg();
+			sql = "DELETE FROM account_sub_category WHERE acCode IN (" + id + ")";
+			if (row > 0) {
+				return message.respondWithMessage("Success");
+			} else if (msg.contains("foreign key")) {
+				msg = "this record already used in reference tables, Cannot delete of this record";
+			}
+			
+		}else{
+			System.out.println("Parent lai delete garna khojchas?? \n");
 		}
 		return message.respondWithError(msg);
 	}
+	
 }

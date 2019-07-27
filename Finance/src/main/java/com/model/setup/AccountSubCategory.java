@@ -13,11 +13,11 @@ import javax.persistence.Table;
 public class AccountSubCategory implements java.io.Serializable {
 
 	@Id
-	@Column(name = "ac_code")
+	@Column(name = "acCode")
 	private Long acCode;
-	@Column(name = "ac_name")
+	@Column(name = "acName")
 	private String acName;
-	@Column(name = "mgr_code")
+	@Column(name = "mgrCode")
 	private Long mgrCode;
 	@JoinColumn(name = "account_category", referencedColumnName = "id")
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -68,7 +68,7 @@ public class AccountSubCategory implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "\n{\"acCode\": \"" + acCode + "\",\"acName\": \"" + acName + "\",\"mgrCode\": \"" + mgrCode
+		return "\n{\"ac_code\": \"" + acCode + "\",\"ac_name\": \"" + acName + "\",\"mgr_code\": \"" + mgrCode
 				+ "\",\"accountCategory\": \"" + accountCategory + "\"}";
 	}
 

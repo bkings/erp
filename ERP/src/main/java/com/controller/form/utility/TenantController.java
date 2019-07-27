@@ -12,5 +12,4 @@ public class TenantController {
     public String doGet() {
         return "Utility/Tenant";
     } 
-
 }

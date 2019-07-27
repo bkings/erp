@@ -32,6 +32,7 @@ public class AccountCategoryRestController {
 
     @PostMapping
     public Object doSave(@RequestBody AccountCategory obj, @RequestHeader(value = "Authorization") String Authorization) throws IOException {
+    	System.out.println("inside the rest::save \n");
         return service.save(obj, Authorization);
     }
 

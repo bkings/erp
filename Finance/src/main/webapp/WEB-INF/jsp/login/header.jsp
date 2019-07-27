@@ -1,6 +1,9 @@
 <%
 String path = request.getContextPath();
-String token=session.getAttribute("token").toString();%><!DOCTYPE html>
+/* String token=session.getAttribute("token").toString(); */
+String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJNUyIsImlzcyI6Ik1hbm9qIiwic3ViIjoiQURNSU4iLCJhdWQiOiJBbGwiLCJyb2xlcyI6InVzZXIiLCJpYXQiOjE1NjQxMjI0NjUsImV4cCI6MTU2NDIwODg2NX0.38THJAOchvveCzEKkbEOQGD0GqefyWy0cQzxfTt22hw";
+%>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Welcome User</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

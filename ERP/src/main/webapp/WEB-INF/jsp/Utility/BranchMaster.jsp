@@ -1,37 +1,44 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="../login/header.jsp"%>
-        <fieldset>  <legend>BranchMaster</legend> 
-<form method='POST' id='dataFrom'> 
-<div class="row">
-<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
-<label>Id</label>
-<input type='text' name='id' id='id' class='form-control'/>
-</div>
-<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
-<label>Code</label>
-<input type='text' name='code' id='code' class='form-control'/>
-</div>
-<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
-<label>Name</label>
-<input type='text' name='name' id='name' class='form-control'/>
-</div>
-<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
-<label>Parent</label>
-<input type='text' name='parent' id='parent' class='form-control'/>
-</div>
-<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
-<label>Organization</label>
-<input type='text' name='organization' id='organization' class='form-control'/>
-</div>
-<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
-  
-  <label id='ActionMSG'>&nbsp;</label><br>
-<input type='button' onclick='doSave()' id='Save' value='Save' class='btn btn-success'/>
-<input type='button' onclick='doUpdate()'  id='Update' value='Update' class='btn btn-success' style='display: none'/></div>
-</div>
-</form>
-</fieldset>  <br> <fieldset>  <legend>BranchMaster Data</legend> 
- <div class='row' id='table'></div>
+<fieldset>
+	<legend>BranchMaster</legend>
+	<form method='POST' id='dataFrom'>
+		<div class="row">
+			<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
+				<label>Id</label> <input type='text' name='id' id='id'
+					class='form-control' />
+			</div>
+			<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
+				<label>Code</label> <input type='text' name='code' id='code'
+					class='form-control' />
+			</div>
+			<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
+				<label>Name</label> <input type='text' name='name' id='name'
+					class='form-control' />
+			</div>
+			<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
+				<label>Parent</label> <input type='text' name='parent' id='parent'
+					class='form-control' />
+			</div>
+			<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
+				<label>Organization</label> <input type='text' name='organization'
+					id='organization' class='form-control' />
+			</div>
+			<div class='col-lg-2 col-sm-2 col-md-2 col-xs-6'>
+
+				<label id='ActionMSG'>&nbsp;</label><br> <input type='button'
+					onclick='doSave()' id='Save' value='Save' class='btn btn-success' />
+				<input type='button' onclick='doUpdate()' id='Update' value='Update'
+					class='btn btn-success' style='display: none' />
+			</div>
+		</div>
+	</form>
+</fieldset>
+<br>
+<fieldset>
+	<legend>BranchMaster Data</legend>
+	<div class='row' id='table'></div>
 </fieldset>
 <script>
 function edit(sn){
@@ -97,7 +104,7 @@ callApi(URL,"","DELETE");
  getRecord();
 </script>
 
-<%@include file="../login/footer.jsp" %>
+<%@include file="../login/footer.jsp"%>
 
 <%--
 return "\n{\"id\": \""+id+"\",\"code\": \""+code+"\",\"name\": \""+name+"\",\"parent\": \""+parent+"\",\"organization\": \""+organization+"\"}";

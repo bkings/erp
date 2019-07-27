@@ -15,7 +15,6 @@ public class DaoImpAccountCategory implements DaoAccountCategory {
     String msg = "";
     int row = 1;
 
-
     @Override
     public List<AccountCategory> getAll(String hql) {
         msg = "";
@@ -23,6 +22,7 @@ public class DaoImpAccountCategory implements DaoAccountCategory {
         List<AccountCategory> list = new ArrayList<>();
         try {
             list = session.createQuery(hql).list();
+
         } catch (HibernateException e) {
             msg = model.Message.exceptionMsg(e);
         }

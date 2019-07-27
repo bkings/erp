@@ -47,9 +47,13 @@ public class BranchMasterServiceImp implements BranchMasterService {
 					new org.codehaus.jackson.type.TypeReference<Map<String, String>>() {
 					});
 			String parent = map.get("parent").toString();
+			System.out.println("Inside save method of branchmaster :: \n" + parent);
 			String code = map.get("code").toString();
+			System.out.println("Inside save method of branchmaster :: \n" + code);
 			String name = map.get("name").toString();
+			System.out.println("Inside save method of branchmaster :: \n" + name);
 			String organization = map.get("organization").toString();
+			System.out.println("Organization value :: \n" + organization);
 			String sql, id;
 			long tableId;
 			obj.setCode(code);
@@ -155,5 +159,4 @@ public class BranchMasterServiceImp implements BranchMasterService {
 		}
 		return message.respondWithError(msg);
 	}
-
 }

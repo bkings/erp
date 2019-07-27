@@ -1,4 +1,4 @@
-package com.controller.rest.setup;
+package com.controller.rest.account;
 
 import java.io.IOException;
 
@@ -14,41 +14,40 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.model.account.BalanceSheet;
 import com.model.setup.AccountCategory;
-import com.model.setup.AccountSubCategory;
-import com.service.setup.AccountSubCategoryService;
+import com.service.account.BalanceSheetService;
 
 @RestController
-@RequestMapping("api/Setup/AccountSubCategory")
+@RequestMapping("api/Account/BalanceSheet")
 @CrossOrigin
-public class AccountSubCategoryRestController {
+public class BalanceSheetRestController {
 
 	@Autowired
-	AccountSubCategoryService service;
-	
+	BalanceSheetService service;
+
 	@GetMapping
 	public Object index(@RequestHeader(value = "Authorization") String Authorization) {
+
 		return service.getAll();
 	}
 
 	@PostMapping
-	public Object doSave(@RequestBody String jsonData, @RequestHeader(value = "Authorization") String Authorization)
+	public Object doSave(@RequestBody BalanceSheet obj, @RequestHeader(value = "Authorization") String Authorization)
 			throws IOException {
-		System.out.println("In rest controller. \n");
-		return service.save(jsonData, Authorization);
+		System.out.println("inside the get mapping request \n");
+		return service.save(obj, Authorization);
 	}
 
-	@PutMapping("/{id}")
-	public Object doUpdate(@RequestBody String jsonData, @PathVariable long id,
+	@PutMapping("/{number}")
+	public Object doUpdate(@RequestBody BalanceSheet obj, @PathVariable long number,
 			@RequestHeader(value = "Authorization") String Authorization) throws IOException {
-		System.out.println(Authorization);
-		return service.update(jsonData, id, Authorization);
+		return service.update(obj, number, Authorization);
 	}
 
-	@DeleteMapping("/{id}")
-	public Object doDelete(@PathVariable String id, @RequestHeader(value = "Authorization") String Authorization) {
-		return service.delete(id, Authorization);
+	@DeleteMapping("/{number}")
+	public Object doDelete(@PathVariable String number, @RequestHeader(value = "Authorization") String Authorization) {
+		return service.delete(number, Authorization);
 	}
 
-	
 }

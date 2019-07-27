@@ -17,7 +17,6 @@
                 <input type='button' onclick='doSave()' id='Save' value='Save' class='btn btn-success'/>
                    </div>
     </form>
-
 <script>
 
     function callApi(URL, requestData, apiMethod)
@@ -54,9 +53,6 @@
         var URL = "<%=path%>/Login";
         callApi(URL, requestData, "POST");
     }
-
-
-
 </script>
 
 <%@include file="login/footer.jsp" %>
